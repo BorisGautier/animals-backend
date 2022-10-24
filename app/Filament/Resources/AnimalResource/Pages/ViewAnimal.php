@@ -28,6 +28,6 @@ class ViewAnimal extends ViewRecord
     public function openTab()
     {
         $id = $this->record->id;
-        return Redirect::away("http://animal.position.cm/?id=$id");
+        return Redirect::away("https://animal.position.cm/?id=$id");
     }
 }
