@@ -1,0 +1,43 @@
+version: "3"
+services:
+    animal-services:
+        build:
+            context: .
+            dockerfile: .docker/Dockerfile
+        image: animal-services
+        container_name: animal-services
+        ports:
+            - '${APP_PORT:-80}:80'
+        volumes:
+            - ./:/var/www/html
+        networks:
+            - animal-services
+        depends_on:
+            - animal-services-pgsql
+
+    animal-services-pgsql:
+        restart: always
+        image: 'postgres:13'
+        ports:
+            - '${FORWARD_DB_PORT:-5432}:5432'
+        container_name: animal-services-pgsql
+        environment:
+            PGPASSWORD: '${PG_PASSWORD:-secret}'
+            POSTGRES_DB: '${DB_DATABASE}'
+            POSTGRES_USER: '${DB_USERNAME}'
+            POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
+        volumes:
+            - 'db-pgsql:/var/lib/postgresql/data'
+        networks:
+            - animal-services
+        healthcheck:
+            test: ["CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}"]
+            retries: 3
+            timeout: 5s
+
+networks:
+    animal-services:
+        driver: bridge
+volumes:
+    db-pgsql:
+        driver: local
