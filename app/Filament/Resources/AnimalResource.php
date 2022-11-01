@@ -7,6 +7,7 @@ use App\Filament\Resources\AnimalResource\RelationManagers;
 use App\Filament\Widgets\Deplacements;
 use App\Models\Animal;
 use Filament\Forms;
+use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
@@ -54,6 +55,17 @@ class AnimalResource extends Resource
                 Forms\Components\TextInput::make('diet'),
                 Forms\Components\Textarea::make('habitat'),
                 Forms\Components\Textarea::make('menaces'),
+                ColorPicker::make('couleur')->rgba(),
+                FileUpload::make('cover_url')
+                    ->label('Image de Fond')
+                    ->disk('public')
+                    ->directory('uploads/animals/images')
+                    ->image()
+                    ->loadingIndicatorPosition('left')
+                    ->enableDownload()
+                    ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
+                        return (string) str($file->getClientOriginalName())->prepend(time() . '_');
+                    }),
                 Repeater::make('medias')
                     ->relationship()
                     ->schema([

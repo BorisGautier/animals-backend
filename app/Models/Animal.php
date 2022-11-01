@@ -17,7 +17,7 @@ class Animal extends Model
      */
     protected $fillable = [
         'name',
-        'title', 'description', 'classe', 'order', 'family', 'date_naissance', 'sexe', 'localisation', 'longitude', 'latitude','funfact','diet','habitat','menaces'
+        'title', 'description', 'classe', 'order', 'family', 'date_naissance', 'sexe', 'localisation', 'longitude', 'latitude', 'funfact', 'diet', 'habitat', 'menaces', 'couleur', 'cover_url'
     ];
 
     public function medias()

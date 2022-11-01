@@ -30,6 +30,8 @@ return new class extends Migration
             $table->string("diet")->nullable();
             $table->text("habitat")->nullable();
             $table->text("menaces")->nullable();
+            $table->string("couleur")->nullable();
+            $table->text('cover_url')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
