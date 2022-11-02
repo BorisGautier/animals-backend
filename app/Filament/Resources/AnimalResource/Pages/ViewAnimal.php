@@ -28,6 +28,19 @@ class ViewAnimal extends ViewRecord
     public function openTab()
     {
         $id = $this->record->id;
-        return Redirect::away("http://tracking.forearthver.com/?id=$id");
+        $code = $this->randomString() . $id;
+
+        return Redirect::away("https://tracking.forearthver.com/?code=$code");
+    }
+
+    public function randomString($length = 8)
+    {
+        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }
